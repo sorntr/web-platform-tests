@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html class=reftest-wait>
+<link rel="match" href="geometry-with-float-size-ref.html">
+<style>
+.container {
+  width: 100.5px;
+  height: 200.5px;
+}
+#canvas-geometry {
+  background-image: paint(geometry);
+}
+</style>
+<script src="/common/reftest-wait.js"></script>
+<script src="/common/css-paint-tests.js"></script>
+<body>
+<div id="canvas-geometry" class="container"></div>
+
+<script id="code" type="text/worklet">
+registerPaint('geometry', class {
+    paint(ctx, geom) {
+        if (geom.width == 100.5 && geom.height == 200.5)
+            ctx.fillStyle = 'green';
+        else
+            ctx.fillStyle = 'red';
+        ctx.fillRect(0, 0, 50, 50);
+    }
+});
+</script>
+
+<script>
+    importPaintWorkletAndTerminateTestAfterAsyncPaint(document.getElementById('code').textContent);
+</script>
+</body>
+</html>
